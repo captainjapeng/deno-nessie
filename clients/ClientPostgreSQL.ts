@@ -32,7 +32,7 @@ export class ClientPostgreSQL extends AbstractClient<PostgreSQLClient> {
     return `ROLLBACK TRANSACTION;`;
   }
   protected get QUERY_MIGRATION_TABLE_EXISTS() {
-    return `SELECT to_regclass('${TABLE_MIGRATIONS}');`;
+    return `SELECT '${TABLE_MIGRATIONS}' FROM information_schema.tables WHERE table_name = '${TABLE_MIGRATIONS}';`;
   }
   protected get QUERY_CREATE_MIGRATION_TABLE() {
     return `CREATE TABLE ${TABLE_MIGRATIONS} (id bigserial PRIMARY KEY, ${COL_FILE_NAME} varchar(${MAX_FILE_NAME_LENGTH}) UNIQUE, ${COL_CREATED_AT} timestamp (0) default current_timestamp);`;
